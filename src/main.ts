@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 
 import ElementPlus from 'element-plus'
@@ -10,9 +9,15 @@ import 'virtual:svg-icons-register'
 
 import '@/styles/index.scss'
 
+import globalComponent from '@/components'
+
+import router from './router'
+
 const app = createApp(App)
 app.use(ElementPlus, {
   locale: zhCn,
 })
 
+app.use(router)
+app.use(globalComponent)
 app.mount('#app')
