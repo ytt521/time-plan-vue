@@ -1,28 +1,68 @@
 <template>
-  <div class="container">
-    <div class="content">
-      <div class="logo">
-        <Svg name="logo" width="100%" height="100%"></Svg>
-      </div>
-      <div class="form">
-        <form action="#">
-          <div class="form-item">
-            <UserFilled color="#C2C2C2" height="24px" width="24px" />
-            <input class="account" type="text" placeholder="手机号或邮箱" />
+  <div class="card">
+    <div class="logo">
+      <Svg name="logo" width="100%" height="100%"></Svg>
+    </div>
+    <div class="form-content">
+      <form action="#">
+        <div class="form-item">
+          <div class="row">
+            <User color="#C2C2C2" height="24px" width="24px" />
+            <input
+              class="item-input"
+              type="text"
+              placeholder="手机号或邮箱"
+              v-on:focus="accountFocused = true"
+              v-on:blur="accountFocused = false"
+            />
           </div>
-          <div class="error"></div>
-          <div class="form-item">
-            <UserFilled color="#C2C2C2" height="24px" width="24px" />
-            <input class="account" type="text" placeholder="图形验证码" />
+          <span
+            class="bt-line"
+            :class="{ 'focus-span': accountFocused }"
+          ></span>
+          <div class="error-msg">
+            <p></p>
           </div>
-          <div class="error"></div>
-          <div class="form-item">
-            <UserFilled color="#C2C2C2" height="24px" width="24px" />
-            <input class="account" type="text" placeholder="密码" />
+        </div>
+        <div class="form-item">
+          <div class="row">
+            <ScaleToOriginal color="#C2C2C2" height="24px" width="24px" />
+            <input
+              class="item-input"
+              type="text"
+              placeholder="图形验证码"
+              v-on:focus="captchaFocused = true"
+              v-on:blur="captchaFocused = false"
+            />
           </div>
-          <div class="error"></div>
-          <button class="login-btn">登录</button>
-        </form>
+          <span
+            class="bt-line"
+            :class="{ 'focus-span': captchaFocused }"
+          ></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="row">
+            <Lock color="#C2C2C2" height="24px" width="24px" />
+            <input
+              class="item-input"
+              type="password"
+              placeholder="密码"
+              v-on:focus="passwordFocused = true"
+              v-on:blur="passwordFocused = false"
+            />
+          </div>
+          <span
+            class="bt-line"
+            :class="{ 'focus-span': passwordFocused }"
+          ></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
+        <button class="login-btn">登录</button>
         <div class="link">
           <a href="">忘记密码</a>
           <a href="">注册</a>
@@ -31,87 +71,123 @@
         <div class="other-container">
           <span class="other">其他方式登录</span>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </template>
 
-<script setup lang="ts" name="Login"></script>
+<script setup lang="ts" name="Login">
+import { ref } from 'vue'
+let accountFocused = ref<boolean>(false)
+let captchaFocused = ref<boolean>(false)
+let passwordFocused = ref<boolean>(false)
+</script>
 
 <style scoped lang="scss">
-.container {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  .content {
-    width: 400px;
-    height: 516px;
-    margin: 80px auto;
-    .logo {
-      width: 100%;
-      height: 66px;
-    }
-    .form {
-      width: 100%;
-      height: 450px;
-      padding: 40px 50px 32px;
-      border: 1px solid #f0f0f0;
-      margin-top: 30px;
-
-      .form-item {
-        width: 246px;
-        height: 36px;
+.card {
+  width: 400px;
+  height: 516px;
+  position: relative;
+  top: 80px;
+  left: calc(50% - 200px);
+  .logo {
+    height: 66px;
+  }
+  .form-content {
+    padding: 40px 50px 32px;
+    border: 1px solid #f0f0f0;
+    margin-top: 30px;
+    .form-item {
+      position: relative;
+      .row {
         display: flex;
         align-items: center;
-        .account {
+        .item-input {
           border: none;
-          outline: none;
-          padding: 5px 10px 5px 8px;
+          padding: 10px 10px 8px 10px;
         }
-        .account::placeholder {
+        .item-input::placeholder {
           color: #d1d1d1;
         }
       }
-      .error {
-        height: 30px;
-        width: 100%;
-        border-top: 1px solid#d1d1d1;
+      .bt-line {
+        display: block;
+        height: 1px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
-      .login-btn {
-        width: 100%;
-        padding: 11px 16px;
-        color: white;
+      .bt-line::before {
+        content: '';
+        width: 0px;
+        height: 1px;
         background-color: #4772fa;
-        border: none;
-        border-radius: 2px;
+        border-radius: 1px;
+        position: absolute;
+        left: 51%;
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      .link {
-        margin-top: 12px;
+      .bt-line::after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        background-color: #4772fa;
+        border-radius: 1px;
+        position: absolute;
+        right: 50%;
+        transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .focus-span::before {
+        width: 51%;
+        left: 0;
+      }
+      .focus-span::after {
+        width: 50%;
+        right: 0;
+      }
+
+      .error-msg {
         display: flex;
-        justify-content: space-between;
-      }
-      .link a {
-        text-decoration: none;
-        color: #4772fa;
+        justify-content: flex-end;
+        color: #ff3180;
         font-size: 13px;
+        margin-top: 6px;
+        min-height: 24px;
+        line-height: 1.3;
       }
-      .wx-btn {
-        width: 100%;
-        padding: 11px 16px;
-        color: white;
-        background-color: #52bc70;
-        border: none;
-        border-radius: 2px;
-        margin-top: 30px;
-      }
-      .other-container {
-        text-align: center;
-        .other {
-          font-size: 12px;
-          color: rgba(0, 0, 0, 0.24);
-          display: inline-block;
-          margin-top: 25px;
-        }
+    }
+    .login-btn {
+      width: 100%;
+      padding: 11px 16px;
+      color: white;
+      background-color: #4772fa;
+      border: none;
+      border-radius: 2px;
+    }
+    .link {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .link a {
+      text-decoration: none;
+      color: #4772fa;
+      font-size: 13px;
+    }
+    .wx-btn {
+      width: 100%;
+      padding: 11px 16px;
+      color: white;
+      background-color: #52bc70;
+      border: none;
+      border-radius: 2px;
+      margin-top: 30px;
+    }
+    .other-container {
+      text-align: center;
+      .other {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.24);
+        display: inline-block;
+        margin-top: 25px;
       }
     }
   }
