@@ -1,34 +1,98 @@
 <template>
   <div class="card">
     <div class="logo">
-      <Svg name="logo" width="100%" height="100%"></Svg>
+      <Svg name="logo" width="100%" height="100%" fill="yellow"></Svg>
     </div>
     <div class="form-content">
       <form action="#">
         <div class="form-item">
           <div class="row">
             <User
-              :color="accountFocused ? '#4772fa' : '#C2C2C2'"
+              :color="nickNameFocused ? '#4772fa' : '#C2C2C2'"
               height="24px"
               width="24px"
             />
             <input
               class="item-input"
               type="text"
-              placeholder="手机号或邮箱"
-              v-on:focus="accountFocused = true"
-              v-on:blur="accountFocused = false"
+              placeholder="昵称（可选）"
+              v-on:focus="nickNameFocused = true"
+              v-on:blur="nickNameFocused = false"
             />
           </div>
           <span
             class="bt-line"
-            :class="{ 'focus-span': accountFocused }"
+            :class="{ 'focus-span': nickNameFocused }"
           ></span>
           <div class="error-msg">
             <p></p>
           </div>
         </div>
-
+        <div class="form-item">
+          <div class="row">
+            <Phone
+              :color="phoneFocused ? '#4772fa' : '#C2C2C2'"
+              height="24px"
+              width="24px"
+            />
+            <input
+              class="item-input"
+              type="text"
+              placeholder="手机号"
+              v-on:focus="phoneFocused = true"
+              v-on:blur="phoneFocused = false"
+            />
+          </div>
+          <span class="bt-line" :class="{ 'focus-span': phoneFocused }"></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="row">
+            <ScaleToOriginal
+              :color="captchaFocused ? '#4772fa' : '#C2C2C2'"
+              height="24px"
+              width="24px"
+            />
+            <input
+              class="item-input"
+              type="text"
+              placeholder="图形验证码"
+              v-on:focus="captchaFocused = true"
+              v-on:blur="captchaFocused = false"
+            />
+            <img :src="codeImg" class="captcha" />
+          </div>
+          <span
+            class="bt-line"
+            :class="{ 'focus-span': captchaFocused }"
+          ></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="row">
+            <Svg
+              name="code"
+              width="24px"
+              height="24px"
+              :fill="codeFocused ? '#4772fa' : '#C2C2C2'"
+            ></Svg>
+            <input
+              class="item-input"
+              type="text"
+              placeholder="手机验证码"
+              v-on:focus="codeFocused = true"
+              v-on:blur="codeFocused = false"
+            />
+          </div>
+          <span class="bt-line" :class="{ 'focus-span': codeFocused }"></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
         <div class="form-item">
           <div class="row">
             <Lock
@@ -38,7 +102,7 @@
             />
             <input
               class="item-input"
-              type="password"
+              type="text"
               placeholder="密码"
               v-on:focus="passwordFocused = true"
               v-on:blur="passwordFocused = false"
@@ -52,12 +116,21 @@
             <p></p>
           </div>
         </div>
-        <button class="login-btn">登录</button>
+        <button class="register-btn">注册</button>
         <div class="link">
-          <a href="">忘记密码</a>
-          <a href="">注册</a>
+          <a href="">邮箱注册</a>
+          <a href="">已有账户?</a>
         </div>
-        <button class="wx-btn">微信登录</button>
+        <button class="wx-btn">微信</button>
+        <div class="guideline">
+          <input type="checkbox" style="margin: 0 5px 0 0" />
+          <p>
+            同意
+            <a href="#">使用条款</a>
+            和
+            <a href="#">隐私政策</a>
+          </p>
+        </div>
         <div class="other-container">
           <span class="other">其他方式登录</span>
         </div>
@@ -66,16 +139,33 @@
   </div>
 </template>
 
-<script setup lang="ts" name="Login">
-import { ref } from 'vue'
-let accountFocused = ref<boolean>(false)
+<script setup lang="ts" name="Register">
+import { ref, onMounted } from 'vue'
+import { reqGenerateCaptcha } from '@/api/user'
+import type { CaptchaResponse } from '@/api/user/type'
+let nickNameFocused = ref<boolean>(false)
+let phoneFocused = ref<boolean>(false)
+let captchaFocused = ref<boolean>(false)
+let codeFocused = ref<boolean>(false)
 let passwordFocused = ref<boolean>(false)
+let codeImg = ref<string>()
+let uid = ref<string>()
+let generateCaptcha = async () => {
+  let result: CaptchaResponse = await reqGenerateCaptcha()
+  if (result.code == 200) {
+    codeImg.value = result.data.img
+    uid.value = result.data.uid
+  }
+}
+onMounted(() => {
+  generateCaptcha()
+})
 </script>
 
 <style scoped lang="scss">
 .card {
   width: 400px;
-  height: 516px;
+  height: 737px;
   position: relative;
   top: 80px;
   left: calc(50% - 200px);
@@ -83,21 +173,24 @@ let passwordFocused = ref<boolean>(false)
     height: 66px;
   }
   .form-content {
+    border: 1px solid rgba(0, 0, 0, 0.06);
     padding: 40px 50px 32px;
-    border: 1px solid #f0f0f0;
     margin-top: 30px;
     .form-item {
       position: relative;
       .row {
         display: flex;
         align-items: center;
-        position: relative;
         .item-input {
           border: none;
           padding: 10px 10px 8px 10px;
         }
         .item-input::placeholder {
           color: #d1d1d1;
+        }
+        .captcha {
+          position: absolute;
+          right: 5px;
         }
       }
       .bt-line {
@@ -144,7 +237,7 @@ let passwordFocused = ref<boolean>(false)
         line-height: 1.3;
       }
     }
-    .login-btn {
+    .register-btn {
       width: 100%;
       padding: 11px 16px;
       color: white;
@@ -182,6 +275,15 @@ let passwordFocused = ref<boolean>(false)
         margin-top: 25px;
       }
     }
+    .guideline {
+      display: flex;
+      margin-top: 20px;
+      font-size: 14px;
+    }
   }
+}
+a {
+  text-decoration: none;
+  color: #4772fa;
 }
 </style>

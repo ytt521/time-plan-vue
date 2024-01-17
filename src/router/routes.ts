@@ -6,7 +6,15 @@ export const constantRoute = [
     meta: {
       title: '登录',
       hidden: true,
-      icon: 'Promotion',
+    },
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/index.vue'),
+    name: 'register',
+    meta: {
+      title: '注册',
+      hidden: true,
     },
   },
 ]
