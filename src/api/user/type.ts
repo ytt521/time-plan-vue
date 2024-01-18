@@ -9,3 +9,10 @@ export interface CaptchaResponse extends BaseResponse {
     img: string
   }
 }
+export interface UserLogin {
+  userName: string
+  password: string
+}
+export interface LocalLoginResponse extends BaseResponse {
+  data: string
+}

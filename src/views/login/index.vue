@@ -15,6 +15,7 @@
             <input
               class="item-input"
               type="text"
+              v-model="loginInfo.userName"
               placeholder="手机号或邮箱"
               v-on:focus="accountFocused = true"
               v-on:blur="accountFocused = false"
@@ -39,6 +40,7 @@
             <input
               class="item-input"
               type="password"
+              v-model="loginInfo.password"
               placeholder="密码"
               v-on:focus="passwordFocused = true"
               v-on:blur="passwordFocused = false"
@@ -52,7 +54,7 @@
             <p></p>
           </div>
         </div>
-        <button class="login-btn">登录</button>
+        <button class="login-btn" @click.prevent="localLogin">登录</button>
         <div class="link">
           <a href="">忘记密码</a>
           <a href="">注册</a>
@@ -67,9 +69,22 @@
 </template>
 
 <script setup lang="ts" name="Login">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
+import { reqUserLogin } from '@/api/user'
+import type { LocalLoginResponse } from '@/api/user/type'
 let accountFocused = ref<boolean>(false)
 let passwordFocused = ref<boolean>(false)
+
+let loginInfo = reactive({ userName: '', password: '' })
+// 本地登录
+let localLogin = async () => {
+  let result: LocalLoginResponse = await reqUserLogin(loginInfo)
+  if (result.code == 200) {
+    console.log(result.data)
+  } else {
+    console.log(result.errMsg)
+  }
+}
 </script>
 
 <style scoped lang="scss">
