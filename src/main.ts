@@ -12,6 +12,7 @@ import '@/styles/index.scss'
 import globalComponent from '@/components'
 
 import router from './router'
+import pinia from './store'
 
 const app = createApp(App)
 app.use(ElementPlus, {
@@ -19,5 +20,6 @@ app.use(ElementPlus, {
 })
 
 app.use(router)
+app.use(pinia)
 app.use(globalComponent)
 app.mount('#app')

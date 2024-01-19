@@ -17,4 +17,13 @@ export const constantRoute = [
       hidden: true,
     },
   },
+  {
+    path: '/dashboard',
+    component: () => import('@/views/dashboard/index.vue'),
+    name: 'dashboard',
+    meta: {
+      title: '仪表盘',
+      hidden: true,
+    },
+  },
 ]

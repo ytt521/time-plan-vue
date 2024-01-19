@@ -26,7 +26,7 @@
             :class="{ 'focus-span': accountFocused }"
           ></span>
           <div class="error-msg">
-            <p></p>
+            <p>{{ loginErrorInfo }}</p>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
         <button class="login-btn" @click.prevent="localLogin">登录</button>
         <div class="link">
           <a href="">忘记密码</a>
-          <a href="">注册</a>
+          <router-link to="/register">注册</router-link>
         </div>
         <button class="wx-btn">微信登录</button>
         <div class="other-container">
@@ -70,19 +70,25 @@
 
 <script setup lang="ts" name="Login">
 import { ref, reactive } from 'vue'
-import { reqUserLogin } from '@/api/user'
-import type { LocalLoginResponse } from '@/api/user/type'
+import { useRouter } from 'vue-router'
+import useUserStore from '@/store/modules/user'
+
+let userStore = useUserStore()
+let $router = useRouter()
+
 let accountFocused = ref<boolean>(false)
 let passwordFocused = ref<boolean>(false)
+let loginErrorInfo = ref<string>('')
 
 let loginInfo = reactive({ userName: '', password: '' })
 // 本地登录
 let localLogin = async () => {
-  let result: LocalLoginResponse = await reqUserLogin(loginInfo)
-  if (result.code == 200) {
-    console.log(result.data)
-  } else {
-    console.log(result.errMsg)
+  try {
+    loginErrorInfo.value = ''
+    await userStore.userLogin(loginInfo)
+    $router.push('/dashboard')
+  } catch (error) {
+    loginErrorInfo.value = (error as Error).message
   }
 }
 </script>

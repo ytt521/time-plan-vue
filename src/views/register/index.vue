@@ -28,7 +28,28 @@
             <p></p>
           </div>
         </div>
-        <div class="form-item">
+        <div class="form-item" v-if="registerType == 1">
+          <div class="row">
+            <Svg
+              name="email"
+              width="24px"
+              height="24px"
+              :fill="emailFocused ? '#4772fa' : '#C2C2C2'"
+            ></Svg>
+            <input
+              class="item-input"
+              type="text"
+              placeholder="邮箱"
+              v-on:focus="emailFocused = true"
+              v-on:blur="emailFocused = false"
+            />
+          </div>
+          <span class="bt-line" :class="{ 'focus-span': emailFocused }"></span>
+          <div class="error-msg">
+            <p></p>
+          </div>
+        </div>
+        <div class="form-item" v-if="registerType == 0">
           <div class="row">
             <Phone
               :color="phoneFocused ? '#4772fa' : '#C2C2C2'"
@@ -48,7 +69,7 @@
             <p></p>
           </div>
         </div>
-        <div class="form-item">
+        <div class="form-item" v-if="registerType == 0">
           <div class="row">
             <ScaleToOriginal
               :color="captchaFocused ? '#4772fa' : '#C2C2C2'"
@@ -72,7 +93,7 @@
             <p></p>
           </div>
         </div>
-        <div class="form-item">
+        <div class="form-item" v-if="registerType == 0">
           <div class="row">
             <Svg
               name="code"
@@ -118,8 +139,17 @@
         </div>
         <button class="register-btn">注册</button>
         <div class="link">
-          <a href="">邮箱注册</a>
-          <a href="">已有账户?</a>
+          <a href="" v-if="registerType == 0" @click.prevent="registerType = 1">
+            邮箱注册
+          </a>
+          <a
+            href=""
+            v-if="registerType == 1"
+            @click.prevent="phoneRegisterScene"
+          >
+            手机号注册
+          </a>
+          <router-link to="/login">已有账户?</router-link>
         </div>
         <button class="wx-btn">微信</button>
         <div class="guideline">
@@ -147,15 +177,21 @@ let nickNameFocused = ref<boolean>(false)
 let phoneFocused = ref<boolean>(false)
 let captchaFocused = ref<boolean>(false)
 let codeFocused = ref<boolean>(false)
+let emailFocused = ref<boolean>(false)
 let passwordFocused = ref<boolean>(false)
 let codeImg = ref<string>()
 let uid = ref<string>()
+let registerType = ref<number>(0)
 let generateCaptcha = async () => {
   let result: CaptchaResponse = await reqGenerateCaptcha()
   if (result.code == 200) {
     codeImg.value = result.data.img
     uid.value = result.data.uid
   }
+}
+let phoneRegisterScene = () => {
+  registerType.value = 0
+  generateCaptcha()
 }
 onMounted(() => {
   generateCaptcha()

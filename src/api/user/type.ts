@@ -1,6 +1,6 @@
 export interface BaseResponse {
   code: number
-  errMsg: null | string
+  errMsg: string
   timestamp: string
 }
 export interface CaptchaResponse extends BaseResponse {
