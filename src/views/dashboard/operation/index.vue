@@ -3,7 +3,10 @@
     <div class="menu">
       <ul>
         <li>
-          <button>
+          <button
+            :class="focusIndex == 1 ? 'task-active' : ''"
+            @click="focusIndex = 1"
+          >
             <Svg
               name="calendar1"
               width="16.5px"
@@ -17,7 +20,10 @@
           </button>
         </li>
         <li>
-          <button>
+          <button
+            :class="focusIndex == 2 ? 'task-active' : ''"
+            @click="focusIndex = 2"
+          >
             <Svg
               name="calendar7"
               width="16.5px"
@@ -31,7 +37,10 @@
           </button>
         </li>
         <li>
-          <button>
+          <button
+            :class="focusIndex == 3 ? 'task-active' : ''"
+            @click="focusIndex = 3"
+          >
             <Svg name="box" width="16.5px" height="15px" fill="#6D6F75"></Svg>
             <div class="btn-content">
               <span style="font-size: 14px">收集箱</span>
@@ -47,7 +56,10 @@
     <div class="completed">
       <ul>
         <li>
-          <button>
+          <button
+            :class="focusIndex == 4 ? 'task-active' : ''"
+            @click="focusIndex = 4"
+          >
             <CircleCheck
               class="sidebar-icon"
               color="#C2C2C2"
@@ -60,7 +72,10 @@
           </button>
         </li>
         <li>
-          <button>
+          <button
+            :class="focusIndex == 5 ? 'task-active' : ''"
+            @click="focusIndex = 5"
+          >
             <Delete
               class="sidebar-icon"
               color="#C2C2C2"
@@ -78,6 +93,9 @@
 </template>
 
 <script setup lang="ts" name="Operation">
+import { ref } from 'vue'
+let focusIndex = ref<number>(0)
+
 interface Tree {
   label: string
   children?: Tree[]
@@ -124,7 +142,7 @@ const defaultProps = {
         width: 190px;
         height: 40px;
         border: none;
-        background-color: transparent;
+        background-color: white;
         padding: 0 12px 0 14px;
         .btn-content {
           display: flex;
@@ -156,5 +174,9 @@ const defaultProps = {
 }
 .completed {
   margin-top: 20px;
+}
+.task-active {
+  background-color: #ecf1fe !important;
+  border-radius: 5px;
 }
 </style>

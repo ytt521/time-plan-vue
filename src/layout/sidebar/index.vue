@@ -9,41 +9,53 @@
     <div class="sidebar-middle">
       <CircleCheck
         class="sidebar-icon"
+        :class="focusIndex == 1 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="goTasks()"
       ></CircleCheck>
       <Calendar
         class="sidebar-icon"
+        :class="focusIndex == 2 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="goCalendar()"
       ></Calendar>
       <Search
         class="sidebar-icon"
+        :class="focusIndex == 3 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="search()"
       ></Search>
     </div>
     <div class="sidebar-bottom">
       <Refresh
         class="sidebar-icon"
+        :class="focusIndex == 4 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="refresh()"
       ></Refresh>
       <BellFilled
         class="sidebar-icon"
+        :class="focusIndex == 5 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="message()"
       ></BellFilled>
       <QuestionFilled
         class="sidebar-icon"
+        :class="focusIndex == 6 ? 'active' : ''"
         color="#C2C2C2"
         height="24px"
         width="24px"
+        @click="more()"
       ></QuestionFilled>
     </div>
   </div>
@@ -51,12 +63,26 @@
 
 <script setup lang="ts" name="SideBar">
 import { ref } from 'vue'
-let taskFocused = ref<string>(false)
-let calendarFocused = ref<string>(false)
-let searchFocused = ref<string>(false)
-let refreshFocused = ref<string>(false)
-let messageFocused = ref<string>(false)
-let moreFocused = ref<string>(false)
+let focusIndex = ref<number>(0)
+
+let goTasks = () => {
+  focusIndex.value = 1
+}
+let goCalendar = () => {
+  focusIndex.value = 2
+}
+let search = () => {
+  focusIndex.value = 3
+}
+let refresh = () => {
+  focusIndex.value = 4
+}
+let message = () => {
+  focusIndex.value = 5
+}
+let more = () => {
+  focusIndex.value = 6
+}
 </script>
 
 <style scoped lang="scss">
@@ -65,6 +91,7 @@ let moreFocused = ref<string>(false)
   height: 32px;
   display: block;
   margin: 10px 8.5px;
+  border-radius: 5px;
 }
 .sidebar-middle {
   display: flex;
@@ -84,5 +111,8 @@ let moreFocused = ref<string>(false)
 }
 .sidebar-icon {
   margin: 15px;
+}
+.active {
+  color: #4772fa;
 }
 </style>

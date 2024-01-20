@@ -1,9 +1,12 @@
 import Svg from './Svg/index.vue'
+import ContextMenu from './ContextMenu/index.vue'
+
 import { App, Component } from 'vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const globalComponent: Record<string, Component> = {
   Svg,
+  ContextMenu,
 }
 
 export default {

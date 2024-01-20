@@ -1,6 +1,6 @@
 <template>
   <div class="layout_container">
-    <div class="layout_silder">
+    <div class="layout_sidebar">
       <Operation />
     </div>
     <div class="layout_content">
