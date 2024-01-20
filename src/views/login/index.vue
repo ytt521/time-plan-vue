@@ -86,7 +86,7 @@ let localLogin = async () => {
   try {
     loginErrorInfo.value = ''
     await userStore.userLogin(loginInfo)
-    $router.push('/dashboard')
+    $router.push('/plan')
   } catch (error) {
     loginErrorInfo.value = (error as Error).message
   }

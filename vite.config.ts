@@ -25,7 +25,10 @@ export default defineConfig(({ mode }) => {
       preprocessorOptions: {
         scss: {
           javascriptEnabled: true,
-          additionalData: '@import "./src/styles/variable.scss";',
+          additionalData: `
+          @import "./src/styles/variable.scss";
+          @import "./src/styles/bem.scss";
+          `,
         },
       },
     },

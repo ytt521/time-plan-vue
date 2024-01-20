@@ -1,9 +1,9 @@
-export const SET_TOKEN=(token:string)=>{
-    localStorage.setItem('TOKEN',token)
+export const SET_TOKEN = (token: string) => {
+  localStorage.setItem('TOKEN', token)
 }
-export const GET_TOKEN=()=>{
-    return localStorage.getItem('TOKEN')
+export const GET_TOKEN = () => {
+  return localStorage.getItem('TOKEN')
 }
-export const REMOVE_TONEN =()=>{
-    localStorage.removeItem('TOKEN')
+export const REMOVE_TONEN = () => {
+  localStorage.removeItem('TOKEN')
 }
