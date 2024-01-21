@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>提醒与通知</div>
 </template>
 
 <script setup lang="ts"></script>

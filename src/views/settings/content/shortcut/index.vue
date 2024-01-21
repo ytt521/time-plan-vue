@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>快捷键</div>
 </template>
 
 <script setup lang="ts"></script>

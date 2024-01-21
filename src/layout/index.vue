@@ -22,6 +22,7 @@ import Content from './content/index.vue'
     width: $base-sidebar-width;
     height: 100vh;
     background-color: $base-sidebar-background;
+    overflow: hidden;
   }
   .layout_content {
     position: absolute;

@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>高级会员</div>
 </template>
 
 <script setup lang="ts"></script>

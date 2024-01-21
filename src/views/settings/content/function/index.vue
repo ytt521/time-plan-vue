@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>功能模块</div>
 </template>
 
 <script setup lang="ts"></script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>更多设置</div>
 </template>
 
 <script setup lang="ts"></script>

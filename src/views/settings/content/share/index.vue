@@ -1,5 +1,5 @@
 <template>
-  <div class="container"></div>
+  <div>共享协作</div>
 </template>
 
 <script setup lang="ts"></script>
