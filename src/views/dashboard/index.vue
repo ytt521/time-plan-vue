@@ -25,10 +25,10 @@ import Content from './content/index.vue'
   }
   .layout_content {
     position: absolute;
-    width: calc(100% - $base-sidebar-width - $base-sidebar-operation-width);
+    width: calc(100% - $base-sidebar-operation-width);
     height: 100%;
     top: 0;
-    left: $base-sidebar-width + $base-sidebar-operation-width;
+    left: $base-sidebar-operation-width;
     overflow: auto;
   }
 }
