@@ -85,4 +85,29 @@ const emit = defineEmits(['closeSetting'])
   justify-content: flex-end;
   margin: 10px;
 }
+.component {
+  height: 540px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+/* 设置滚动条的样式 */
+.component::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 10px;
+}
+
+.component::-webkit-scrollbar-track {
+  background-color: white;
+  border-radius: 10px;
+}
+
+.component::-webkit-scrollbar-thumb {
+  background-color: #b2b2b2;
+  border-radius: 10px;
+}
+
+.component::-webkit-scrollbar-thumb:hover {
+  background-color: #b2b2b2;
+  border-radius: 10px;
+}
 </style>
